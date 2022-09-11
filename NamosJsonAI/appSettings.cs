@@ -115,7 +115,7 @@ namespace NamosJsonAI.Classes
             public string ServiceName { get; set; }
             public string Location { get; set; }
             public bool Enabled { get; set; }
-            public List<string> ExcludeSites { get; set; }
+            public string ExcludeSites { get; set; }
         }
 
         public class SQLJob

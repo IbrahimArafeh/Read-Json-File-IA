@@ -49,6 +49,9 @@ namespace NamosJsonAI
             txtSCOConnectionString.Text = jsonObj["SCOConnectionString"];
             txtPOSConnectionString.Text = jsonObj["POSConnectionString"];
 
+            //Fill Sercices Grid
+            FillServicesGrid(jsonObj["Services"]);
+
 
         }
 
@@ -166,7 +169,6 @@ namespace NamosJsonAI
         {
 
             List<ScheduleTask> scheduleTasks = new List<ScheduleTask>();
-            List<string> ArrayexcludeSites = new List<string>();
 
             foreach (var item in ScheduleTasksFromJson)
             {
@@ -186,7 +188,7 @@ namespace NamosJsonAI
                             scheduleTasks1.ExcludeSites += items;
                         else
                         {
-                            scheduleTasks1.ExcludeSites += items + " ,";
+                            scheduleTasks1.ExcludeSites += items + ",";
                             listCount--;
                         }
                     }
@@ -199,6 +201,44 @@ namespace NamosJsonAI
             gridScheduleTasks.Columns[3].Width = 400;
             gridScheduleTasks.Columns[0].Width = 150;
         }
+
+        private void FillServicesGrid(dynamic ServicesFromJson)
+        {
+            List<Service> services = new List<Service>();
+
+            foreach (var item in ServicesFromJson)
+            {
+                Service service = new Service();
+                List<string> excludeSitesList = new List<string>();
+                service.ServiceDisplay = (string)item["ServiceDisplay"];
+                service.ServiceName = (string)item["ServiceName"];
+                service.Location = (string)item["Location"];
+                service.Enabled = (bool)item["Enabled"];
+                if (item["ExcludeSites"] == null)
+                    service.ExcludeSites = null;
+                else
+                {
+                    int listCount = item["ExcludeSites"].Count;
+                    foreach (string items in item["ExcludeSites"])
+                    {
+                        if (listCount == 1)
+                            service.ExcludeSites += items;
+                        else
+                        {
+                            service.ExcludeSites += items + ",";
+                            listCount--;
+                        }
+                    }
+
+                }
+                services.Add(service);
+            }
+
+            gridServices.DataSource = services;
+            gridServices.Columns[0].Width = 200;
+            gridServices.Columns[1].Width = 200;
+        }
+
 
         private void btnUpdateConnection_Click(object sender, EventArgs e)
         {
@@ -216,6 +256,111 @@ namespace NamosJsonAI
             string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
             File.WriteAllText("appsettings.json", output);
 
+            LoadJsonFile();
+        }
+
+        private void gridServices_SelectionChanged(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in gridServices.SelectedRows)
+            {
+                txtServiceDisplay.Text = row.Cells[0].Value.ToString();
+                txtServiceName.Text = row.Cells[1].Value.ToString();
+                txtServicesLocation.Text = row.Cells[2].Value.ToString();
+                if (row.Cells[3].Value.ToString() == "True")
+                    chkServicesEnable.Checked = true;
+                else
+                    chkServicesEnable.Checked = false;
+                if (row.Cells[4].Value == null)
+                    txtServicesExcludeSites.Text = "";
+                else
+                    txtServicesExcludeSites.Text = row.Cells[4].Value.ToString();
+            }
+        }
+
+        private void btnAddServices_Click(object sender, EventArgs e)
+        {
+            string[] authorInfo = txtServicesExcludeSites.Text.Split(',');
+
+            JArray jArray = new JArray();
+
+            for (int i = 0; i < authorInfo.Length; i++)
+            {
+                jArray.Add(authorInfo[i]);
+            }
+
+            var newCompanyMember = "{ 'ServiceDisplay': '" + txtServiceDisplay.Text + "','ServiceName': '" + txtServiceName.Text + "','Location': '" + txtServicesLocation.Text + "','Enabled': " + JsonConvert.SerializeObject(chkServicesEnable.Checked) + ",'ExcludeSites': " + jArray + "}";
+            try
+            {
+                var experienceArrary = jsonObj.GetValue("Services") as JArray;
+                var newCompany = JObject.Parse(newCompanyMember);
+                experienceArrary.Add(newCompany);
+
+                jsonObj["Services"] = experienceArrary;
+                string newJsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj,
+                                       Newtonsoft.Json.Formatting.Indented);
+                File.WriteAllText("appsettings.json", newJsonResult);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Add Error : " + ex.Message.ToString());
+            }
+            LoadJsonFile();
+        }
+
+        private void btnUpdateServices_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in gridServices.SelectedRows)
+            {
+                jsonObj["Services"][gridServices.CurrentCell.RowIndex]["ServiceDisplay"] = txtServiceDisplay.Text;
+                jsonObj["Services"][gridServices.CurrentCell.RowIndex]["ServiceName"] = txtServiceName.Text;
+                jsonObj["Services"][gridServices.CurrentCell.RowIndex]["Location"] = txtServicesLocation.Text;
+                jsonObj["Services"][gridServices.CurrentCell.RowIndex]["Enabled"] = chkServicesEnable.Checked;
+                jsonObj["Services"][gridServices.CurrentCell.RowIndex]["ExcludeSites"] = txtServicesExcludeSites.Text;
+
+                string[] authorInfo = txtServicesExcludeSites.Text.Split(',');
+
+                jsonObj["Services"][gridServices.CurrentCell.RowIndex]["ExcludeSites"] = JArray.Parse("[]".ToString());
+
+
+                for (int i = 0; i < authorInfo.Length; i++)
+                {
+                    jsonObj["Services"][gridServices.CurrentCell.RowIndex]["ExcludeSites"].Add(authorInfo[i]);
+                }
+
+                string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
+                File.WriteAllText("appsettings.json", output);
+
+                LoadJsonFile();
+            }
+        }
+
+        private void btnDeteteServices_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                JArray experiencesArrary = (JArray)jsonObj["Services"];
+                var companyId = txtServiceName.Text;
+
+                if (companyId != null)
+                {
+                    var companyName = string.Empty;
+                    var companyToDeleted = experiencesArrary.FirstOrDefault(obj => obj["ServiceName"].Value<string>() == companyId);
+
+                    experiencesArrary.Remove(companyToDeleted);
+
+                    string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
+                    File.WriteAllText("appsettings.json", output);
+
+                }
+                else
+                {
+                    Console.Write("Invalid Company ID, Try Again!");
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
             LoadJsonFile();
         }
     }

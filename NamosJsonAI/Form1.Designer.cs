@@ -28,9 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle41 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle42 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControlSettings = new MetroFramework.Controls.MetroTabControl();
             this.tabConnection = new MetroFramework.Controls.MetroTabPage();
             this.txtMaxPOSCount = new MetroFramework.Controls.MetroTextBox();
@@ -54,7 +57,7 @@
             this.txtLocation = new MetroFramework.Controls.MetroTextBox();
             this.txtExcludeSites = new MetroFramework.Controls.MetroTextBox();
             this.txtTaskName = new MetroFramework.Controls.MetroTextBox();
-            this.metroTabPage1 = new MetroFramework.Controls.MetroTabPage();
+            this.tabServices = new MetroFramework.Controls.MetroTabPage();
             this.txtMasterFiles_POSServer = new MetroFramework.Controls.MetroTextBox();
             this.lblMasterFiles_POSServer = new MetroFramework.Controls.MetroLabel();
             this.txtMasterFiles_BOSServer = new MetroFramework.Controls.MetroTextBox();
@@ -74,21 +77,39 @@
             this.btnUpdateConnection = new MetroFramework.Controls.MetroButton();
             this.txtMasterNamosSTN = new MetroFramework.Controls.MetroTextBox();
             this.lblMasterNamosSTN = new MetroFramework.Controls.MetroLabel();
+            this.lblTaskName = new MetroFramework.Controls.MetroLabel();
+            this.lblLocation = new MetroFramework.Controls.MetroLabel();
+            this.lblExcludeSites = new MetroFramework.Controls.MetroLabel();
+            this.lblServicesExcludeSites = new MetroFramework.Controls.MetroLabel();
+            this.lblServiceName = new MetroFramework.Controls.MetroLabel();
+            this.lblServiceDisplay = new MetroFramework.Controls.MetroLabel();
+            this.btnDeteteServices = new MetroFramework.Controls.MetroButton();
+            this.gridServices = new MetroFramework.Controls.MetroGrid();
+            this.btnUpdateServices = new MetroFramework.Controls.MetroButton();
+            this.btnAddServices = new MetroFramework.Controls.MetroButton();
+            this.chkServicesEnable = new MetroFramework.Controls.MetroCheckBox();
+            this.txtServiceName = new MetroFramework.Controls.MetroTextBox();
+            this.txtServicesLocation = new MetroFramework.Controls.MetroTextBox();
+            this.txtServiceDisplay = new MetroFramework.Controls.MetroTextBox();
+            this.lblServicesLocaiton = new MetroFramework.Controls.MetroLabel();
+            this.txtServicesExcludeSites = new MetroFramework.Controls.MetroTextBox();
             this.tabControlSettings.SuspendLayout();
             this.tabConnection.SuspendLayout();
             this.tabSQL.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridScheduleTasks)).BeginInit();
+            this.tabServices.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridServices)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControlSettings
             // 
             this.tabControlSettings.Controls.Add(this.tabConnection);
             this.tabControlSettings.Controls.Add(this.tabSQL);
-            this.tabControlSettings.Controls.Add(this.metroTabPage1);
+            this.tabControlSettings.Controls.Add(this.tabServices);
             this.tabControlSettings.Location = new System.Drawing.Point(23, 63);
             this.tabControlSettings.Name = "tabControlSettings";
-            this.tabControlSettings.SelectedIndex = 0;
-            this.tabControlSettings.Size = new System.Drawing.Size(840, 492);
+            this.tabControlSettings.SelectedIndex = 2;
+            this.tabControlSettings.Size = new System.Drawing.Size(840, 502);
             this.tabControlSettings.TabIndex = 0;
             this.tabControlSettings.UseSelectable = true;
             // 
@@ -131,7 +152,7 @@
             this.tabConnection.HorizontalScrollbarSize = 10;
             this.tabConnection.Location = new System.Drawing.Point(4, 38);
             this.tabConnection.Name = "tabConnection";
-            this.tabConnection.Size = new System.Drawing.Size(832, 450);
+            this.tabConnection.Size = new System.Drawing.Size(832, 460);
             this.tabConnection.TabIndex = 0;
             this.tabConnection.Text = "Connection";
             this.tabConnection.VerticalScrollbarBarColor = true;
@@ -376,6 +397,9 @@
             // 
             // tabSQL
             // 
+            this.tabSQL.Controls.Add(this.lblExcludeSites);
+            this.tabSQL.Controls.Add(this.lblLocation);
+            this.tabSQL.Controls.Add(this.lblTaskName);
             this.tabSQL.Controls.Add(this.btnDeleteScheduleTasks);
             this.tabSQL.Controls.Add(this.gridScheduleTasks);
             this.tabSQL.Controls.Add(this.btnUpdateScheduleTasks);
@@ -418,41 +442,41 @@
             this.gridScheduleTasks.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridScheduleTasks.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.gridScheduleTasks.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridScheduleTasks.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle40.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
+            dataGridViewCellStyle40.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle40.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle40.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
+            dataGridViewCellStyle40.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle40.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridScheduleTasks.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle40;
             this.gridScheduleTasks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(136)))), ((int)(((byte)(136)))));
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.gridScheduleTasks.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle41.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle41.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle41.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle41.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(136)))), ((int)(((byte)(136)))));
+            dataGridViewCellStyle41.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
+            dataGridViewCellStyle41.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle41.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridScheduleTasks.DefaultCellStyle = dataGridViewCellStyle41;
             this.gridScheduleTasks.EnableHeadersVisualStyles = false;
             this.gridScheduleTasks.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.gridScheduleTasks.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.gridScheduleTasks.Location = new System.Drawing.Point(13, 235);
             this.gridScheduleTasks.Name = "gridScheduleTasks";
             this.gridScheduleTasks.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridScheduleTasks.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle42.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle42.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
+            dataGridViewCellStyle42.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle42.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle42.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
+            dataGridViewCellStyle42.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle42.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridScheduleTasks.RowHeadersDefaultCellStyle = dataGridViewCellStyle42;
             this.gridScheduleTasks.RowHeadersWidth = 62;
             this.gridScheduleTasks.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.gridScheduleTasks.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridScheduleTasks.Size = new System.Drawing.Size(795, 150);
+            this.gridScheduleTasks.Size = new System.Drawing.Size(795, 186);
             this.gridScheduleTasks.TabIndex = 10;
             this.gridScheduleTasks.SelectionChanged += new System.EventHandler(this.gridScheduleTasks_SelectionChanged);
             // 
@@ -488,7 +512,7 @@
             // chkScheduleTasks
             // 
             this.chkScheduleTasks.AutoSize = true;
-            this.chkScheduleTasks.Location = new System.Drawing.Point(13, 143);
+            this.chkScheduleTasks.Location = new System.Drawing.Point(147, 145);
             this.chkScheduleTasks.Name = "chkScheduleTasks";
             this.chkScheduleTasks.Size = new System.Drawing.Size(58, 15);
             this.chkScheduleTasks.TabIndex = 7;
@@ -510,9 +534,8 @@
             this.txtLocation.CustomButton.UseSelectable = true;
             this.txtLocation.CustomButton.Visible = false;
             this.txtLocation.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.txtLocation.Lines = new string[] {
-        "Location"};
-            this.txtLocation.Location = new System.Drawing.Point(13, 60);
+            this.txtLocation.Lines = new string[0];
+            this.txtLocation.Location = new System.Drawing.Point(147, 60);
             this.txtLocation.MaxLength = 32767;
             this.txtLocation.Name = "txtLocation";
             this.txtLocation.PasswordChar = '\0';
@@ -523,7 +546,6 @@
             this.txtLocation.ShortcutsEnabled = true;
             this.txtLocation.Size = new System.Drawing.Size(201, 23);
             this.txtLocation.TabIndex = 6;
-            this.txtLocation.Text = "Location";
             this.txtLocation.UseSelectable = true;
             this.txtLocation.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.txtLocation.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
@@ -543,9 +565,8 @@
             this.txtExcludeSites.CustomButton.UseSelectable = true;
             this.txtExcludeSites.CustomButton.Visible = false;
             this.txtExcludeSites.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.txtExcludeSites.Lines = new string[] {
-        "Exclude Sites"};
-            this.txtExcludeSites.Location = new System.Drawing.Point(13, 101);
+            this.txtExcludeSites.Lines = new string[0];
+            this.txtExcludeSites.Location = new System.Drawing.Point(147, 102);
             this.txtExcludeSites.MaxLength = 32767;
             this.txtExcludeSites.Name = "txtExcludeSites";
             this.txtExcludeSites.PasswordChar = '\0';
@@ -556,7 +577,6 @@
             this.txtExcludeSites.ShortcutsEnabled = true;
             this.txtExcludeSites.Size = new System.Drawing.Size(201, 23);
             this.txtExcludeSites.TabIndex = 5;
-            this.txtExcludeSites.Text = "Exclude Sites";
             this.txtExcludeSites.UseSelectable = true;
             this.txtExcludeSites.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.txtExcludeSites.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
@@ -576,9 +596,8 @@
             this.txtTaskName.CustomButton.UseSelectable = true;
             this.txtTaskName.CustomButton.Visible = false;
             this.txtTaskName.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.txtTaskName.Lines = new string[] {
-        "Task Name"};
-            this.txtTaskName.Location = new System.Drawing.Point(13, 21);
+            this.txtTaskName.Lines = new string[0];
+            this.txtTaskName.Location = new System.Drawing.Point(147, 21);
             this.txtTaskName.MaxLength = 32767;
             this.txtTaskName.Name = "txtTaskName";
             this.txtTaskName.PasswordChar = '\0';
@@ -589,24 +608,36 @@
             this.txtTaskName.ShortcutsEnabled = true;
             this.txtTaskName.Size = new System.Drawing.Size(201, 23);
             this.txtTaskName.TabIndex = 3;
-            this.txtTaskName.Text = "Task Name";
             this.txtTaskName.UseSelectable = true;
             this.txtTaskName.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.txtTaskName.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
-            // metroTabPage1
+            // tabServices
             // 
-            this.metroTabPage1.HorizontalScrollbarBarColor = true;
-            this.metroTabPage1.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroTabPage1.HorizontalScrollbarSize = 10;
-            this.metroTabPage1.Location = new System.Drawing.Point(4, 38);
-            this.metroTabPage1.Name = "metroTabPage1";
-            this.metroTabPage1.Size = new System.Drawing.Size(832, 450);
-            this.metroTabPage1.TabIndex = 2;
-            this.metroTabPage1.Text = "metroTabPage1";
-            this.metroTabPage1.VerticalScrollbarBarColor = true;
-            this.metroTabPage1.VerticalScrollbarHighlightOnWheel = false;
-            this.metroTabPage1.VerticalScrollbarSize = 10;
+            this.tabServices.Controls.Add(this.lblServicesLocaiton);
+            this.tabServices.Controls.Add(this.txtServicesExcludeSites);
+            this.tabServices.Controls.Add(this.lblServicesExcludeSites);
+            this.tabServices.Controls.Add(this.lblServiceName);
+            this.tabServices.Controls.Add(this.lblServiceDisplay);
+            this.tabServices.Controls.Add(this.btnDeteteServices);
+            this.tabServices.Controls.Add(this.gridServices);
+            this.tabServices.Controls.Add(this.btnUpdateServices);
+            this.tabServices.Controls.Add(this.btnAddServices);
+            this.tabServices.Controls.Add(this.chkServicesEnable);
+            this.tabServices.Controls.Add(this.txtServiceName);
+            this.tabServices.Controls.Add(this.txtServicesLocation);
+            this.tabServices.Controls.Add(this.txtServiceDisplay);
+            this.tabServices.HorizontalScrollbarBarColor = true;
+            this.tabServices.HorizontalScrollbarHighlightOnWheel = false;
+            this.tabServices.HorizontalScrollbarSize = 10;
+            this.tabServices.Location = new System.Drawing.Point(4, 38);
+            this.tabServices.Name = "tabServices";
+            this.tabServices.Size = new System.Drawing.Size(832, 460);
+            this.tabServices.TabIndex = 2;
+            this.tabServices.Text = "Services";
+            this.tabServices.VerticalScrollbarBarColor = true;
+            this.tabServices.VerticalScrollbarHighlightOnWheel = false;
+            this.tabServices.VerticalScrollbarSize = 10;
             // 
             // txtMasterFiles_POSServer
             // 
@@ -926,7 +957,7 @@
             // btnUpdateConnection
             // 
             this.btnUpdateConnection.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.btnUpdateConnection.Location = new System.Drawing.Point(3, 420);
+            this.btnUpdateConnection.Location = new System.Drawing.Point(10, 423);
             this.btnUpdateConnection.Name = "btnUpdateConnection";
             this.btnUpdateConnection.Size = new System.Drawing.Size(137, 34);
             this.btnUpdateConnection.TabIndex = 30;
@@ -976,6 +1007,291 @@
             this.lblMasterNamosSTN.TabIndex = 31;
             this.lblMasterNamosSTN.Text = "Master Namos STN";
             // 
+            // lblTaskName
+            // 
+            this.lblTaskName.AutoSize = true;
+            this.lblTaskName.Location = new System.Drawing.Point(24, 21);
+            this.lblTaskName.Name = "lblTaskName";
+            this.lblTaskName.Size = new System.Drawing.Size(72, 19);
+            this.lblTaskName.TabIndex = 12;
+            this.lblTaskName.Text = "Task Name";
+            // 
+            // lblLocation
+            // 
+            this.lblLocation.AutoSize = true;
+            this.lblLocation.Location = new System.Drawing.Point(24, 60);
+            this.lblLocation.Name = "lblLocation";
+            this.lblLocation.Size = new System.Drawing.Size(58, 19);
+            this.lblLocation.TabIndex = 13;
+            this.lblLocation.Text = "Location";
+            // 
+            // lblExcludeSites
+            // 
+            this.lblExcludeSites.AutoSize = true;
+            this.lblExcludeSites.Location = new System.Drawing.Point(24, 102);
+            this.lblExcludeSites.Name = "lblExcludeSites";
+            this.lblExcludeSites.Size = new System.Drawing.Size(83, 19);
+            this.lblExcludeSites.TabIndex = 14;
+            this.lblExcludeSites.Text = "Exclude Sites";
+            // 
+            // lblServicesExcludeSites
+            // 
+            this.lblServicesExcludeSites.AutoSize = true;
+            this.lblServicesExcludeSites.Location = new System.Drawing.Point(481, 64);
+            this.lblServicesExcludeSites.Name = "lblServicesExcludeSites";
+            this.lblServicesExcludeSites.Size = new System.Drawing.Size(83, 19);
+            this.lblServicesExcludeSites.TabIndex = 25;
+            this.lblServicesExcludeSites.Text = "Exclude Sites";
+            // 
+            // lblServiceName
+            // 
+            this.lblServiceName.AutoSize = true;
+            this.lblServiceName.Location = new System.Drawing.Point(30, 64);
+            this.lblServiceName.Name = "lblServiceName";
+            this.lblServiceName.Size = new System.Drawing.Size(91, 19);
+            this.lblServiceName.TabIndex = 24;
+            this.lblServiceName.Text = "Service Name";
+            // 
+            // lblServiceDisplay
+            // 
+            this.lblServiceDisplay.AutoSize = true;
+            this.lblServiceDisplay.Location = new System.Drawing.Point(30, 25);
+            this.lblServiceDisplay.Name = "lblServiceDisplay";
+            this.lblServiceDisplay.Size = new System.Drawing.Size(96, 19);
+            this.lblServiceDisplay.TabIndex = 23;
+            this.lblServiceDisplay.Text = "Service Display";
+            // 
+            // btnDeteteServices
+            // 
+            this.btnDeteteServices.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.btnDeteteServices.Location = new System.Drawing.Point(287, 145);
+            this.btnDeteteServices.Name = "btnDeteteServices";
+            this.btnDeteteServices.Size = new System.Drawing.Size(99, 34);
+            this.btnDeteteServices.TabIndex = 22;
+            this.btnDeteteServices.Text = "Delete";
+            this.btnDeteteServices.UseCustomBackColor = true;
+            this.btnDeteteServices.UseCustomForeColor = true;
+            this.btnDeteteServices.UseSelectable = true;
+            this.btnDeteteServices.UseStyleColors = true;
+            this.btnDeteteServices.Click += new System.EventHandler(this.btnDeteteServices_Click);
+            // 
+            // gridServices
+            // 
+            this.gridServices.AllowUserToResizeRows = false;
+            this.gridServices.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.gridServices.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridServices.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.gridServices.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle37.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
+            dataGridViewCellStyle37.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle37.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle37.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
+            dataGridViewCellStyle37.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle37.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridServices.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle37;
+            this.gridServices.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle38.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle38.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle38.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(136)))), ((int)(((byte)(136)))));
+            dataGridViewCellStyle38.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
+            dataGridViewCellStyle38.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle38.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridServices.DefaultCellStyle = dataGridViewCellStyle38;
+            this.gridServices.EnableHeadersVisualStyles = false;
+            this.gridServices.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.gridServices.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.gridServices.Location = new System.Drawing.Point(19, 207);
+            this.gridServices.Name = "gridServices";
+            this.gridServices.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle39.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
+            dataGridViewCellStyle39.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle39.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle39.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
+            dataGridViewCellStyle39.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle39.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridServices.RowHeadersDefaultCellStyle = dataGridViewCellStyle39;
+            this.gridServices.RowHeadersWidth = 62;
+            this.gridServices.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.gridServices.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridServices.Size = new System.Drawing.Size(795, 240);
+            this.gridServices.TabIndex = 21;
+            this.gridServices.SelectionChanged += new System.EventHandler(this.gridServices_SelectionChanged);
+            // 
+            // btnUpdateServices
+            // 
+            this.btnUpdateServices.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.btnUpdateServices.Location = new System.Drawing.Point(153, 145);
+            this.btnUpdateServices.Name = "btnUpdateServices";
+            this.btnUpdateServices.Size = new System.Drawing.Size(99, 34);
+            this.btnUpdateServices.TabIndex = 20;
+            this.btnUpdateServices.Text = "Update";
+            this.btnUpdateServices.UseCustomBackColor = true;
+            this.btnUpdateServices.UseCustomForeColor = true;
+            this.btnUpdateServices.UseSelectable = true;
+            this.btnUpdateServices.UseStyleColors = true;
+            this.btnUpdateServices.Click += new System.EventHandler(this.btnUpdateServices_Click);
+            // 
+            // btnAddServices
+            // 
+            this.btnAddServices.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.btnAddServices.Location = new System.Drawing.Point(19, 145);
+            this.btnAddServices.Name = "btnAddServices";
+            this.btnAddServices.Size = new System.Drawing.Size(99, 34);
+            this.btnAddServices.Style = MetroFramework.MetroColorStyle.Blue;
+            this.btnAddServices.TabIndex = 19;
+            this.btnAddServices.Text = "Add";
+            this.btnAddServices.UseCustomBackColor = true;
+            this.btnAddServices.UseCustomForeColor = true;
+            this.btnAddServices.UseSelectable = true;
+            this.btnAddServices.UseStyleColors = true;
+            this.btnAddServices.Click += new System.EventHandler(this.btnAddServices_Click);
+            // 
+            // chkServicesEnable
+            // 
+            this.chkServicesEnable.AutoSize = true;
+            this.chkServicesEnable.Location = new System.Drawing.Point(153, 108);
+            this.chkServicesEnable.Name = "chkServicesEnable";
+            this.chkServicesEnable.Size = new System.Drawing.Size(58, 15);
+            this.chkServicesEnable.TabIndex = 18;
+            this.chkServicesEnable.Text = "Enable";
+            this.chkServicesEnable.UseSelectable = true;
+            // 
+            // txtServiceName
+            // 
+            // 
+            // 
+            // 
+            this.txtServiceName.CustomButton.Image = null;
+            this.txtServiceName.CustomButton.Location = new System.Drawing.Point(179, 1);
+            this.txtServiceName.CustomButton.Name = "";
+            this.txtServiceName.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.txtServiceName.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.txtServiceName.CustomButton.TabIndex = 1;
+            this.txtServiceName.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.txtServiceName.CustomButton.UseSelectable = true;
+            this.txtServiceName.CustomButton.Visible = false;
+            this.txtServiceName.FontSize = MetroFramework.MetroTextBoxSize.Medium;
+            this.txtServiceName.Lines = new string[0];
+            this.txtServiceName.Location = new System.Drawing.Point(153, 64);
+            this.txtServiceName.MaxLength = 32767;
+            this.txtServiceName.Name = "txtServiceName";
+            this.txtServiceName.PasswordChar = '\0';
+            this.txtServiceName.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtServiceName.SelectedText = "";
+            this.txtServiceName.SelectionLength = 0;
+            this.txtServiceName.SelectionStart = 0;
+            this.txtServiceName.ShortcutsEnabled = true;
+            this.txtServiceName.Size = new System.Drawing.Size(277, 23);
+            this.txtServiceName.TabIndex = 17;
+            this.txtServiceName.UseSelectable = true;
+            this.txtServiceName.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.txtServiceName.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // txtServicesLocation
+            // 
+            // 
+            // 
+            // 
+            this.txtServicesLocation.CustomButton.Image = null;
+            this.txtServicesLocation.CustomButton.Location = new System.Drawing.Point(179, 1);
+            this.txtServicesLocation.CustomButton.Name = "";
+            this.txtServicesLocation.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.txtServicesLocation.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.txtServicesLocation.CustomButton.TabIndex = 1;
+            this.txtServicesLocation.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.txtServicesLocation.CustomButton.UseSelectable = true;
+            this.txtServicesLocation.CustomButton.Visible = false;
+            this.txtServicesLocation.FontSize = MetroFramework.MetroTextBoxSize.Medium;
+            this.txtServicesLocation.Lines = new string[0];
+            this.txtServicesLocation.Location = new System.Drawing.Point(602, 25);
+            this.txtServicesLocation.MaxLength = 32767;
+            this.txtServicesLocation.Name = "txtServicesLocation";
+            this.txtServicesLocation.PasswordChar = '\0';
+            this.txtServicesLocation.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtServicesLocation.SelectedText = "";
+            this.txtServicesLocation.SelectionLength = 0;
+            this.txtServicesLocation.SelectionStart = 0;
+            this.txtServicesLocation.ShortcutsEnabled = true;
+            this.txtServicesLocation.Size = new System.Drawing.Size(201, 23);
+            this.txtServicesLocation.TabIndex = 16;
+            this.txtServicesLocation.UseSelectable = true;
+            this.txtServicesLocation.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.txtServicesLocation.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // txtServiceDisplay
+            // 
+            // 
+            // 
+            // 
+            this.txtServiceDisplay.CustomButton.Image = null;
+            this.txtServiceDisplay.CustomButton.Location = new System.Drawing.Point(179, 1);
+            this.txtServiceDisplay.CustomButton.Name = "";
+            this.txtServiceDisplay.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.txtServiceDisplay.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.txtServiceDisplay.CustomButton.TabIndex = 1;
+            this.txtServiceDisplay.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.txtServiceDisplay.CustomButton.UseSelectable = true;
+            this.txtServiceDisplay.CustomButton.Visible = false;
+            this.txtServiceDisplay.FontSize = MetroFramework.MetroTextBoxSize.Medium;
+            this.txtServiceDisplay.Lines = new string[0];
+            this.txtServiceDisplay.Location = new System.Drawing.Point(153, 25);
+            this.txtServiceDisplay.MaxLength = 32767;
+            this.txtServiceDisplay.Name = "txtServiceDisplay";
+            this.txtServiceDisplay.PasswordChar = '\0';
+            this.txtServiceDisplay.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtServiceDisplay.SelectedText = "";
+            this.txtServiceDisplay.SelectionLength = 0;
+            this.txtServiceDisplay.SelectionStart = 0;
+            this.txtServiceDisplay.ShortcutsEnabled = true;
+            this.txtServiceDisplay.Size = new System.Drawing.Size(277, 23);
+            this.txtServiceDisplay.TabIndex = 15;
+            this.txtServiceDisplay.UseSelectable = true;
+            this.txtServiceDisplay.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.txtServiceDisplay.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // lblServicesLocaiton
+            // 
+            this.lblServicesLocaiton.AutoSize = true;
+            this.lblServicesLocaiton.Location = new System.Drawing.Point(481, 25);
+            this.lblServicesLocaiton.Name = "lblServicesLocaiton";
+            this.lblServicesLocaiton.Size = new System.Drawing.Size(58, 19);
+            this.lblServicesLocaiton.TabIndex = 27;
+            this.lblServicesLocaiton.Text = "Location";
+            // 
+            // txtServicesExcludeSites
+            // 
+            // 
+            // 
+            // 
+            this.txtServicesExcludeSites.CustomButton.Image = null;
+            this.txtServicesExcludeSites.CustomButton.Location = new System.Drawing.Point(179, 1);
+            this.txtServicesExcludeSites.CustomButton.Name = "";
+            this.txtServicesExcludeSites.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.txtServicesExcludeSites.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.txtServicesExcludeSites.CustomButton.TabIndex = 1;
+            this.txtServicesExcludeSites.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.txtServicesExcludeSites.CustomButton.UseSelectable = true;
+            this.txtServicesExcludeSites.CustomButton.Visible = false;
+            this.txtServicesExcludeSites.FontSize = MetroFramework.MetroTextBoxSize.Medium;
+            this.txtServicesExcludeSites.Lines = new string[0];
+            this.txtServicesExcludeSites.Location = new System.Drawing.Point(602, 64);
+            this.txtServicesExcludeSites.MaxLength = 32767;
+            this.txtServicesExcludeSites.Name = "txtServicesExcludeSites";
+            this.txtServicesExcludeSites.PasswordChar = '\0';
+            this.txtServicesExcludeSites.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtServicesExcludeSites.SelectedText = "";
+            this.txtServicesExcludeSites.SelectionLength = 0;
+            this.txtServicesExcludeSites.SelectionStart = 0;
+            this.txtServicesExcludeSites.ShortcutsEnabled = true;
+            this.txtServicesExcludeSites.Size = new System.Drawing.Size(201, 23);
+            this.txtServicesExcludeSites.TabIndex = 26;
+            this.txtServicesExcludeSites.UseSelectable = true;
+            this.txtServicesExcludeSites.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.txtServicesExcludeSites.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -990,6 +1306,9 @@
             this.tabSQL.ResumeLayout(false);
             this.tabSQL.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridScheduleTasks)).EndInit();
+            this.tabServices.ResumeLayout(false);
+            this.tabServices.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridServices)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1019,7 +1338,7 @@
         private MetroFramework.Controls.MetroTextBox txtTaskName;
         private MetroFramework.Controls.MetroGrid gridScheduleTasks;
         private MetroFramework.Controls.MetroButton btnDeleteScheduleTasks;
-        private MetroFramework.Controls.MetroTabPage metroTabPage1;
+        private MetroFramework.Controls.MetroTabPage tabServices;
         private MetroFramework.Controls.MetroTextBox txtMasterFiles_POSServer;
         private MetroFramework.Controls.MetroLabel lblMasterFiles_POSServer;
         private MetroFramework.Controls.MetroTextBox txtMasterFiles_BOSServer;
@@ -1039,6 +1358,22 @@
         private MetroFramework.Controls.MetroButton btnUpdateConnection;
         private MetroFramework.Controls.MetroTextBox txtMasterNamosSTN;
         private MetroFramework.Controls.MetroLabel lblMasterNamosSTN;
+        private MetroFramework.Controls.MetroLabel lblExcludeSites;
+        private MetroFramework.Controls.MetroLabel lblLocation;
+        private MetroFramework.Controls.MetroLabel lblTaskName;
+        private MetroFramework.Controls.MetroLabel lblServicesExcludeSites;
+        private MetroFramework.Controls.MetroLabel lblServiceName;
+        private MetroFramework.Controls.MetroLabel lblServiceDisplay;
+        private MetroFramework.Controls.MetroButton btnDeteteServices;
+        private MetroFramework.Controls.MetroGrid gridServices;
+        private MetroFramework.Controls.MetroButton btnUpdateServices;
+        public MetroFramework.Controls.MetroButton btnAddServices;
+        private MetroFramework.Controls.MetroCheckBox chkServicesEnable;
+        private MetroFramework.Controls.MetroTextBox txtServiceName;
+        private MetroFramework.Controls.MetroTextBox txtServicesLocation;
+        private MetroFramework.Controls.MetroTextBox txtServiceDisplay;
+        private MetroFramework.Controls.MetroLabel lblServicesLocaiton;
+        private MetroFramework.Controls.MetroTextBox txtServicesExcludeSites;
     }
 }
 
