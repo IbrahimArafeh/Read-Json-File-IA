@@ -9,13 +9,13 @@ namespace NamosJsonAI.Classes
     internal class appSettings
     {
         // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
-        public class DBCompareDatum
+        public class DBCompareData
         {
             public string Location { get; set; }
             public string DB { get; set; }
-            public List<string> IgnoreObjects { get; set; }
+            public string IgnoreObjects { get; set; }
             public bool Enabled { get; set; }
-            public List<object> ExcludeSites { get; set; }
+            public string ExcludeSites { get; set; }
         }
 
         public class DssControl
@@ -48,9 +48,9 @@ namespace NamosJsonAI.Classes
             public string Location { get; set; }
             public string Type { get; set; }
             public string Path { get; set; }
-            public List<string> Extensions { get; set; }
+            public string Extensions { get; set; }
             public bool Enabled { get; set; }
-            public List<object> ExcludeSites { get; set; }
+            public string ExcludeSites { get; set; }
         }
 
         public class MainCheckControl
@@ -82,7 +82,7 @@ namespace NamosJsonAI.Classes
             public List<Service> Services { get; set; }
             public List<SQLScript> SQLScripts { get; set; }
             public List<SQLJob> SQLJobs { get; set; }
-            public List<DBCompareDatum> DBCompareData { get; set; }
+            public List<DBCompareData> DBCompareData { get; set; }
             public List<FilesCompare> FilesCompare { get; set; }
             public string Master_BOS_SQLServer { get; set; }
             public string Master_SCO_SQLServer { get; set; }
@@ -123,7 +123,7 @@ namespace NamosJsonAI.Classes
             public string JobName { get; set; }
             public string Location { get; set; }
             public bool Enabled { get; set; }
-            public List<object> ExcludeSites { get; set; }
+            public string ExcludeSites { get; set; }
         }
 
         public class SQLScript
