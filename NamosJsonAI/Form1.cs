@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -49,6 +50,9 @@ namespace NamosJsonAI
             txtSCOConnectionString.Text = jsonObj["SCOConnectionString"];
             txtPOSConnectionString.Text = jsonObj["POSConnectionString"];
 
+            // Fill HOS Sync Text
+            FillHOSSyncTablesList();
+            
             //Fill Sercices Grid
             FillServicesGrid(jsonObj["Services"]);
 
@@ -63,6 +67,21 @@ namespace NamosJsonAI
             
             //Fill File Compare Grid
             FillFileCompareGrid(jsonObj["FilesCompare"]);
+
+            //Fill Main Check Control Grid
+            FillMainCheckControlGrid(jsonObj["MainCheckControl"]);
+
+            //Fill DSS Control Grid
+            FillFillDssControlGrid(jsonObj["DssControl"]);
+
+            //Fill EPI Check Control Grid
+            FillEPICheckControlGrid(jsonObj["EpiCheckControl"]);
+
+            //Fill EPI Check Control Grid
+            FillNamosCheckControlGrid(jsonObj["NamosCheckControl"]);
+
+            //Fill EPI Settings Grid
+            FillEPISettingsGrid(jsonObj["EPISettings"]);
         }
 
         private void gridScheduleTasks_SelectionChanged(object sender, EventArgs e)
@@ -357,6 +376,7 @@ namespace NamosJsonAI
             gridDbCompareData.Columns[2].Width = 250;
             gridDbCompareData.Columns[4].Width = 100;
         }
+
         private void FillFileCompareGrid(dynamic ServicesFromJson)
         {
             List<FilesCompare> services = new List<FilesCompare>();
@@ -410,6 +430,178 @@ namespace NamosJsonAI
             gridFilesCompare.Columns[2].Width = 250;
             gridFilesCompare.Columns[3].Width = 75;
         }
+
+        private void FillHOSSyncTablesList()
+        {
+            int listCount12 = jsonObj["HOSSyncTablesList"].Count;
+            foreach (string items in jsonObj["HOSSyncTablesList"])
+            {
+                if (listCount12 == 1)
+                    txtHOSSyncTablesList.Text += items;
+                else
+                {
+                    txtHOSSyncTablesList.Text += items + ",";
+                    listCount12--;
+                }
+            }
+
+        }
+
+        private void FillMainCheckControlGrid(dynamic ServicesFromJson)
+        {
+            List<MainCheckControl> services = new List<MainCheckControl>();
+
+            foreach (var item in ServicesFromJson)
+            {
+                MainCheckControl service = new MainCheckControl();
+                List<string> excludeSitesList = new List<string>();
+
+                service.Id = (int)item["Id"];
+                service.Description = (string)item["Description"];
+                service.Enabled = (bool)item["Enabled"];
+                service.SaveInDB = (bool)item["SaveInDB"];
+                if (item["ExcludeSites"] == null)
+                    service.ExcludeSites = null;
+                else
+                {
+                    int listCount = item["ExcludeSites"].Count;
+                    foreach (string items in item["ExcludeSites"])
+                    {
+                        if (listCount == 1)
+                            service.ExcludeSites += items;
+                        else
+                        {
+                            service.ExcludeSites += items + ",";
+                            listCount--;
+                        }
+                    }
+                }
+                
+                services.Add(service);
+            }
+
+            gridMainCheckControl.DataSource = services;
+            gridMainCheckControl.Columns[1].Width = 150;
+            gridMainCheckControl.Columns[3].Width = 150;
+        }
+
+        private void FillFillDssControlGrid(dynamic ServicesFromJson)
+        {
+            List<DssControl> services = new List<DssControl>();
+
+            foreach (var item in ServicesFromJson)
+            {
+                DssControl service = new DssControl();
+                
+                service.Id = (int)item["Id"];
+                service.Name = (string)item["Name"];
+                service.Description = (string)item["Description"];
+                service.Enabled = (bool)item["Enabled"];
+
+                services.Add(service);
+            }
+
+            gridDssControl.DataSource = services;
+            gridDssControl.Columns[1].Width = 210;
+            gridDssControl.Columns[2].Width = 215;
+        }
+
+        private void FillEPICheckControlGrid(dynamic ServicesFromJson)
+        {
+            List<EpiCheckControl> services = new List<EpiCheckControl>();
+
+            foreach (var item in ServicesFromJson)
+            {
+                EpiCheckControl service = new EpiCheckControl();
+
+                service.Id = (int)item["Id"];
+                service.Name = (string)item["Name"];
+                service.Description = (string)item["Description"];
+                service.Enabled = (bool)item["Enabled"];
+
+                services.Add(service);
+            }
+
+            gridEpiCheckControl.DataSource = services;
+            gridEpiCheckControl.Columns[1].Width = 210;
+            gridEpiCheckControl.Columns[2].Width = 215;
+        }
+
+        private void FillNamosCheckControlGrid(dynamic ServicesFromJson)
+        {
+            List<NamosCheckControl> services = new List<NamosCheckControl>();
+
+            foreach (var item in ServicesFromJson)
+            {
+                NamosCheckControl service = new NamosCheckControl();
+
+                service.Id = (int)item["Id"];
+                service.Name = (string)item["Name"];
+                service.Description = (string)item["Description"];
+                service.Enabled = (bool)item["Enabled"];
+
+                services.Add(service);
+            }
+
+            gridNamosCheckControl.DataSource = services;
+            gridNamosCheckControl.Columns[1].Width = 210;
+            gridNamosCheckControl.Columns[2].Width = 215;
+        }
+
+        private void FillEPISettingsGrid(dynamic ServicesFromJson)
+        {
+            List<EPISetting> services = new List<EPISetting>();
+
+            foreach (var item in ServicesFromJson)
+            {
+                EPISetting service = new EPISetting();
+                List<string> excludeSitesList = new List<string>();
+
+                service.Table = (string)item["Table"];
+                service.KeyValueQuery = (string)item["KeyValueQuery"];
+                service.Enabled = (bool)item["Enabled"];
+
+                if (item["ExcludeKeys"] == null)
+                    service.ExcludeKeys = null;
+                else
+                {
+                    int listCount = item["ExcludeKeys"].Count;
+                    foreach (string items in item["ExcludeKeys"])
+                    {
+                        if (listCount == 1)
+                            service.ExcludeKeys += items;
+                        else
+                        {
+                            service.ExcludeKeys += items + ",";
+                            listCount--;
+                        }
+                    }
+                }
+                if (item["ExcludeSites"] == null)
+                    service.ExcludeSites = null;
+                else
+                {
+                    int listCount2 = item["ExcludeSites"].Count;
+                    foreach (string items in item["ExcludeSites"])
+                    {
+                        if (listCount2 == 1)
+                            service.ExcludeSites += items;
+                        else
+                        {
+                            service.ExcludeSites += items + ",";
+                            listCount2--;
+                        }
+                    }
+
+                }
+                services.Add(service);
+            }
+
+            gridEPISettings.DataSource = services;
+            gridEPISettings.Columns[1].Width = 250;
+            gridEPISettings.Columns[2].Width = 200;
+        }
+
         #endregion
         private void btnUpdateConnection_Click(object sender, EventArgs e)
         {
@@ -424,10 +616,17 @@ namespace NamosJsonAI
             jsonObj["SCOConnectionString"] = txtSCOConnectionString.Text;
             jsonObj["POSConnectionString"] = txtPOSConnectionString.Text;
 
+            string[] authorInfo = txtHOSSyncTablesList.Text.Split(',');
+            jsonObj["HOSSyncTablesList"] = JArray.Parse("[]".ToString());
+
+            for (int i = 0; i < authorInfo.Length; i++)
+            {
+                jsonObj["HOSSyncTablesList"].Add(authorInfo[i]);
+            }
+            
             string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
             File.WriteAllText("appsettings.json", output);
 
-            LoadJsonFile();
         }
 
         private void gridServices_SelectionChanged(object sender, EventArgs e)
@@ -966,6 +1165,480 @@ namespace NamosJsonAI
             LoadJsonFile();
         }
 
+        private void gridMainCheckControl_SelectionChanged(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in gridMainCheckControl.SelectedRows)
+            {
+                txtMainCheckControlID.Text = row.Cells[0].Value.ToString();
+                txtMainCheckControlDescription.Text = row.Cells[1].Value.ToString();
+                if (row.Cells[3].Value == null)
+                    txtMainCheckControlExcludeSites.Text = "";
+                else
+                    txtMainCheckControlExcludeSites.Text = row.Cells[3].Value.ToString();
+                if (row.Cells[2].Value.ToString() == "True")
+                    chkMainCheckControlEnable.Checked = true;
+                else
+                    chkMainCheckControlEnable.Checked = false;
+                if (row.Cells[4].Value.ToString() == "True")
+                    chkMainCheckControlSaveInDB.Checked = true;
+                else
+                    chkMainCheckControlSaveInDB.Checked = false;
+            }
+        }
 
+        private void btnAddMainCheckControl_Click(object sender, EventArgs e)
+        {
+            string[] authorInfo = txtMainCheckControlExcludeSites.Text.Split(',');
+
+            JArray jArray = new JArray();
+
+            for (int i = 0; i < authorInfo.Length; i++)
+            {
+                jArray.Add(authorInfo[i]);
+            }
+
+            var newCompanyMember = "{ 'Id': " + JsonConvert.SerializeObject(txtMainCheckControlID.Text) + ",'Description': '" + txtMainCheckControlDescription.Text + "','Enabled': " + JsonConvert.SerializeObject(chkMainCheckControlEnable.Checked) + ",'SaveInDB': " + JsonConvert.SerializeObject(chkMainCheckControlSaveInDB.Checked) + ",'ExcludeSites': " + jArray + "}";
+            
+            try
+            {
+                var experienceArrary = jsonObj.GetValue("MainCheckControl") as JArray;
+                var newCompany = JObject.Parse(newCompanyMember);
+                experienceArrary.Add(newCompany);
+
+                jsonObj["MainCheckControl"] = experienceArrary;
+                string newJsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj,
+                                       Newtonsoft.Json.Formatting.Indented);
+                File.WriteAllText("appsettings.json", newJsonResult);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Add Error : " + ex.Message.ToString());
+            }
+            LoadJsonFile();
+        }
+
+        private void btnUpdateMainCheckControl_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in gridMainCheckControl.SelectedRows)
+            {
+                jsonObj["MainCheckControl"][gridMainCheckControl.CurrentCell.RowIndex]["Id"] = Convert.ToInt32(txtMainCheckControlID.Text);
+                jsonObj["MainCheckControl"][gridMainCheckControl.CurrentCell.RowIndex]["Description"] = txtMainCheckControlDescription.Text;
+                jsonObj["MainCheckControl"][gridMainCheckControl.CurrentCell.RowIndex]["Enabled"] = chkMainCheckControlEnable.Checked;
+                jsonObj["MainCheckControl"][gridMainCheckControl.CurrentCell.RowIndex]["ExcludeSites"] = txtMainCheckControlExcludeSites.Text;
+                jsonObj["MainCheckControl"][gridMainCheckControl.CurrentCell.RowIndex]["SaveInDB"] = chkMainCheckControlSaveInDB.Checked;
+
+                string[] authorInfo = txtMainCheckControlExcludeSites.Text.Split(',');
+                jsonObj["MainCheckControl"][gridMainCheckControl.CurrentCell.RowIndex]["ExcludeSites"] = JArray.Parse("[]".ToString());
+
+                for (int i = 0; i < authorInfo.Length; i++)
+                {
+                    jsonObj["MainCheckControl"][gridMainCheckControl.CurrentCell.RowIndex]["ExcludeSites"].Add(authorInfo[i]);
+                }
+
+                string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
+                File.WriteAllText("appsettings.json", output);
+
+                LoadJsonFile();
+            }
+        }
+
+        private void btnDeleteMainCheckControl_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                JArray experiencesArrary = (JArray)jsonObj["MainCheckControl"];
+                var companyId =  Convert.ToInt32(txtMainCheckControlID.Text);
+
+                if (companyId != 0)
+                {
+                    var companyName = string.Empty;
+                    var companyToDeleted = experiencesArrary.FirstOrDefault(obj => obj["Id"].Value<int>() == companyId);
+
+                    experiencesArrary.Remove(companyToDeleted);
+
+                    string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
+                    File.WriteAllText("appsettings.json", output);
+
+                }
+                else
+                {
+                    Console.Write("Invalid Company ID, Try Again!");
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            LoadJsonFile();
+        }
+
+        private void gridDssControl_SelectionChanged(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in gridDssControl.SelectedRows)
+            {
+                txtDssControlID.Text = row.Cells[0].Value.ToString();
+                txtDssControlName.Text = row.Cells[1].Value.ToString();
+                txtDssControlDescription.Text = row.Cells[2].Value.ToString();
+                if (row.Cells[3].Value.ToString() == "True")
+                    chkDssControlEnable.Checked = true;
+                else
+                    chkDssControlEnable.Checked = false;
+            }
+        }
+
+        private void btnAddDssControl_Click(object sender, EventArgs e)
+        {
+            var newCompanyMember = "{ 'Id': " + JsonConvert.SerializeObject(txtDssControlID.Text) + ",'Name': '" + txtDssControlName.Text + "','Description': '" + txtDssControlDescription.Text + "','Enabled': " + JsonConvert.SerializeObject(chkDssControlEnable.Checked) + "}";
+
+            try
+            {
+                var experienceArrary = jsonObj.GetValue("DssControl") as JArray;
+                var newCompany = JObject.Parse(newCompanyMember);
+                experienceArrary.Add(newCompany);
+
+                jsonObj["DssControl"] = experienceArrary;
+                string newJsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj,
+                                       Newtonsoft.Json.Formatting.Indented);
+                File.WriteAllText("appsettings.json", newJsonResult);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Add Error : " + ex.Message.ToString());
+            }
+            LoadJsonFile();
+        }
+
+        private void btnUpdateDssControl_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in gridDssControl.SelectedRows)
+            {
+                jsonObj["DssControl"][gridDssControl.CurrentCell.RowIndex]["Id"] = Convert.ToInt32(txtDssControlID.Text);
+                jsonObj["DssControl"][gridDssControl.CurrentCell.RowIndex]["Name"] = txtDssControlName.Text;
+                jsonObj["DssControl"][gridDssControl.CurrentCell.RowIndex]["Description"] = txtDssControlDescription.Text;
+                jsonObj["DssControl"][gridDssControl.CurrentCell.RowIndex]["Enabled"] = chkDssControlEnable.Checked;
+
+                string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
+                File.WriteAllText("appsettings.json", output);
+
+                LoadJsonFile();
+            }
+        }
+
+        private void btnDeleteDssControl_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                JArray experiencesArrary = (JArray)jsonObj["DssControl"];
+                var companyId = Convert.ToInt32(txtDssControlID.Text);
+
+                if (companyId != 0)
+                {
+                    var companyName = string.Empty;
+                    var companyToDeleted = experiencesArrary.FirstOrDefault(obj => obj["Id"].Value<int>() == companyId);
+
+                    experiencesArrary.Remove(companyToDeleted);
+
+                    string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
+                    File.WriteAllText("appsettings.json", output);
+
+                }
+                else
+                {
+                    Console.Write("Invalid Company ID, Try Again!");
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            LoadJsonFile();
+        }
+
+        private void gridEpiCheckControl_SelectionChanged(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in gridEpiCheckControl.SelectedRows)
+            {
+                txtEpiCheckControlID.Text = row.Cells[0].Value.ToString();
+                txtEpiCheckControlName.Text = row.Cells[1].Value.ToString();
+                txtEpiCheckControlDescription.Text = row.Cells[2].Value.ToString();
+                if (row.Cells[3].Value.ToString() == "True")
+                    chkEpiCheckControlEnable.Checked = true;
+                else
+                    chkEpiCheckControlEnable.Checked = false;
+            }
+        }
+
+        private void btnAddEpiCheckControl_Click(object sender, EventArgs e)
+        {
+            var newCompanyMember = "{ 'Id': " + JsonConvert.SerializeObject(txtEpiCheckControlID.Text) + ",'Name': '" + txtEpiCheckControlName.Text + "','Description': '" + txtEpiCheckControlDescription.Text + "','Enabled': " + JsonConvert.SerializeObject(chkEpiCheckControlEnable.Checked) + "}";
+
+            try
+            {
+                var experienceArrary = jsonObj.GetValue("EpiCheckControl") as JArray;
+                var newCompany = JObject.Parse(newCompanyMember);
+                experienceArrary.Add(newCompany);
+
+                jsonObj["EpiCheckControl"] = experienceArrary;
+                string newJsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj,
+                                       Newtonsoft.Json.Formatting.Indented);
+                File.WriteAllText("appsettings.json", newJsonResult);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Add Error : " + ex.Message.ToString());
+            }
+            LoadJsonFile();
+        }
+
+        private void btnUpdateEpiCheckControl_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in gridEpiCheckControl.SelectedRows)
+            {
+                jsonObj["EpiCheckControl"][gridEpiCheckControl.CurrentCell.RowIndex]["Id"] = Convert.ToInt32(txtEpiCheckControlID.Text);
+                jsonObj["EpiCheckControl"][gridEpiCheckControl.CurrentCell.RowIndex]["Name"] = txtEpiCheckControlName.Text;
+                jsonObj["EpiCheckControl"][gridEpiCheckControl.CurrentCell.RowIndex]["Description"] = txtEpiCheckControlDescription.Text;
+                jsonObj["EpiCheckControl"][gridEpiCheckControl.CurrentCell.RowIndex]["Enabled"] = chkEpiCheckControlEnable.Checked;
+
+                string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
+                File.WriteAllText("appsettings.json", output);
+
+                LoadJsonFile();
+            }
+        }
+
+        private void btnDeleteEpiCheckControl_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                JArray experiencesArrary = (JArray)jsonObj["EpiCheckControl"];
+                var companyId = Convert.ToInt32(txtEpiCheckControlID.Text);
+
+                if (companyId != 0)
+                {
+                    var companyName = string.Empty;
+                    var companyToDeleted = experiencesArrary.FirstOrDefault(obj => obj["Id"].Value<int>() == companyId);
+
+                    experiencesArrary.Remove(companyToDeleted);
+
+                    string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
+                    File.WriteAllText("appsettings.json", output);
+
+                }
+                else
+                {
+                    Console.Write("Invalid Company ID, Try Again!");
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            LoadJsonFile();
+        }
+
+        private void gridNamosCheckControl_SelectionChanged(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in gridNamosCheckControl.SelectedRows)
+            {
+                txtNamosCheckControlID.Text = row.Cells[0].Value.ToString();
+                txtNamosCheckControlName.Text = row.Cells[1].Value.ToString();
+                txtNamosCheckControlDescription.Text = row.Cells[2].Value.ToString();
+                if (row.Cells[3].Value.ToString() == "True")
+                    chkNamosCheckControlEnable.Checked = true;
+                else
+                    chkNamosCheckControlEnable.Checked = false;
+            }
+        }
+
+        private void btnAddNamosCheckControl_Click(object sender, EventArgs e)
+        {
+            var newCompanyMember = "{ 'Id': " + Convert.ToInt32(txtNamosCheckControlID.Text) + ",'Name': '" + txtNamosCheckControlName.Text + "','Description': '" + txtNamosCheckControlDescription.Text + "','Enabled': " + JsonConvert.SerializeObject(chkNamosCheckControlEnable.Checked) + "}";
+
+            try
+            {
+                var experienceArrary = jsonObj.GetValue("NamosCheckControl") as JArray;
+                var newCompany = JObject.Parse(newCompanyMember);
+                experienceArrary.Add(newCompany);
+
+                jsonObj["NamosCheckControl"] = experienceArrary;
+                string newJsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj,
+                                       Newtonsoft.Json.Formatting.Indented);
+                File.WriteAllText("appsettings.json", newJsonResult);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Add Error : " + ex.Message.ToString());
+            }
+            LoadJsonFile();
+        }
+
+        private void btnUpdateNamosCheckControl_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in gridNamosCheckControl.SelectedRows)
+            {
+                jsonObj["NamosCheckControl"][gridNamosCheckControl.CurrentCell.RowIndex]["Id"] = Convert.ToInt32(txtNamosCheckControlID.Text);
+                jsonObj["NamosCheckControl"][gridNamosCheckControl.CurrentCell.RowIndex]["Name"] = txtNamosCheckControlName.Text;
+                jsonObj["NamosCheckControl"][gridNamosCheckControl.CurrentCell.RowIndex]["Description"] = txtNamosCheckControlDescription.Text;
+                jsonObj["NamosCheckControl"][gridNamosCheckControl.CurrentCell.RowIndex]["Enabled"] = chkNamosCheckControlEnable.Checked;
+
+                string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
+                File.WriteAllText("appsettings.json", output);
+
+                LoadJsonFile();
+            }
+        }
+
+        private void btnDeleteNamosCheckControl_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                JArray experiencesArrary = (JArray)jsonObj["NamosCheckControl"];
+                var companyId = Convert.ToInt32(txtNamosCheckControlID.Text);
+
+                if (companyId != 0)
+                {
+                    var companyName = string.Empty;
+                    var companyToDeleted = experiencesArrary.FirstOrDefault(obj => obj["Id"].Value<int>() == companyId);
+
+                    experiencesArrary.Remove(companyToDeleted);
+
+                    string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
+                    File.WriteAllText("appsettings.json", output);
+
+                }
+                else
+                {
+                    Console.Write("Invalid Company ID, Try Again!");
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            LoadJsonFile();
+        }
+
+        private void gridEPISettings_SelectionChanged(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in gridEPISettings.SelectedRows)
+            {
+                txtEPISettingsTable.Text = row.Cells[0].Value.ToString();
+                txtEPISettingsKeyValueQuery.Text = row.Cells[1].Value.ToString();
+                if (row.Cells[2].Value == null)
+                    txtEPISettingsExcludeKeys.Text = "";
+                else
+                    txtEPISettingsExcludeKeys.Text = row.Cells[2].Value.ToString();
+                if (row.Cells[4].Value.ToString() == "True")
+                    chkEPISettingsEnable.Checked = true;
+                else
+                    chkEPISettingsEnable.Checked = false;
+                if (row.Cells[3].Value == null)
+                    txtEPISettingsExcludeSites.Text = "";
+                else
+                    txtEPISettingsExcludeSites.Text = row.Cells[3].Value.ToString();
+            }
+        }
+
+        private void btnAddEPISettings_Click(object sender, EventArgs e)
+        {
+            string[] authorInfo = txtEPISettingsExcludeKeys.Text.Split(',');
+            string[] authorInfo2 = txtEPISettingsExcludeSites.Text.Split(',');
+
+            JArray jArray = new JArray();
+            JArray jArray2 = new JArray();
+
+            for (int i = 0; i < authorInfo.Length; i++)
+            {
+                jArray.Add(authorInfo[i]);
+            }
+
+            for (int i = 0; i < authorInfo2.Length; i++)
+            {
+                jArray2.Add(authorInfo2[i]);
+            }
+
+            var newCompanyMember = "{ 'Table': '" + txtEPISettingsTable.Text + "','KeyValueQuery': '" + txtEPISettingsKeyValueQuery.Text + "','ExcludeKeys': " + jArray + ",'Enabled': " + JsonConvert.SerializeObject(chkEPISettingsEnable.Checked) + ",'ExcludeSites': " + jArray2 + "}";
+
+            try
+            {
+                var experienceArrary = jsonObj.GetValue("EPISettings") as JArray;
+                var newCompany = JObject.Parse(newCompanyMember);
+                experienceArrary.Add(newCompany);
+
+                jsonObj["EPISettings"] = experienceArrary;
+                string newJsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj,
+                                       Newtonsoft.Json.Formatting.Indented);
+                File.WriteAllText("appsettings.json", newJsonResult);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Add Error : " + ex.Message.ToString());
+            }
+            LoadJsonFile();
+        }
+
+        private void btnUpdateEPISettings_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in gridEPISettings.SelectedRows)
+            {
+                jsonObj["EPISettings"][gridEPISettings.CurrentCell.RowIndex]["Table"] = txtEPISettingsTable.Text;
+                jsonObj["EPISettings"][gridEPISettings.CurrentCell.RowIndex]["KeyValueQuery"] = txtEPISettingsKeyValueQuery.Text;
+                jsonObj["EPISettings"][gridEPISettings.CurrentCell.RowIndex]["ExcludeKeys"] = txtEPISettingsExcludeKeys.Text;
+                jsonObj["EPISettings"][gridEPISettings.CurrentCell.RowIndex]["Enabled"] = chkEPISettingsEnable.Checked;
+                jsonObj["EPISettings"][gridEPISettings.CurrentCell.RowIndex]["ExcludeSites"] = txtEPISettingsExcludeSites.Text;
+
+                string[] authorInfo = txtEPISettingsExcludeKeys.Text.Split(',');
+                string[] authorInfo2 = txtEPISettingsExcludeSites.Text.Split(',');
+
+                jsonObj["EPISettings"][gridEPISettings.CurrentCell.RowIndex]["ExcludeKeys"] = JArray.Parse("[]".ToString());
+                jsonObj["EPISettings"][gridEPISettings.CurrentCell.RowIndex]["ExcludeSites"] = JArray.Parse("[]".ToString());
+
+
+                for (int i = 0; i < authorInfo.Length; i++)
+                {
+                    jsonObj["EPISettings"][gridEPISettings.CurrentCell.RowIndex]["ExcludeKeys"].Add(authorInfo[i]);
+                }
+
+                for (int i = 0; i < authorInfo2.Length; i++)
+                {
+                    jsonObj["EPISettings"][gridEPISettings.CurrentCell.RowIndex]["ExcludeSites"].Add(authorInfo2[i]);
+                }
+
+                string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
+                File.WriteAllText("appsettings.json", output);
+
+                LoadJsonFile();
+            }
+        }
+
+        private void btnDeleteEPISettings_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                JArray experiencesArrary = (JArray)jsonObj["EPISettings"];
+                var companyId = txtEPISettingsTable.Text;
+
+                if (companyId != null)
+                {
+                    var companyName = string.Empty;
+                    var companyToDeleted = experiencesArrary.FirstOrDefault(obj => obj["Table"].Value<string>() == companyId);
+
+                    experiencesArrary.Remove(companyToDeleted);
+
+                    string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
+                    File.WriteAllText("appsettings.json", output);
+
+                }
+                else
+                {
+                    Console.Write("Invalid Company ID, Try Again!");
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            LoadJsonFile();
+        }
     }
 }

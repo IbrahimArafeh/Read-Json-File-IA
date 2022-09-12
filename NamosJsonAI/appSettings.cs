@@ -38,8 +38,8 @@ namespace NamosJsonAI.Classes
         {
             public string Table { get; set; }
             public string KeyValueQuery { get; set; }
-            public List<string> ExcludeKeys { get; set; }
-            public List<object> ExcludeSites { get; set; }
+            public string ExcludeKeys { get; set; }
+            public string ExcludeSites { get; set; }
             public bool Enabled { get; set; }
         }
 
@@ -58,7 +58,7 @@ namespace NamosJsonAI.Classes
             public int Id { get; set; }
             public string Description { get; set; }
             public bool Enabled { get; set; }
-            public List<object> ExcludeSites { get; set; }
+            public string ExcludeSites { get; set; }
             public bool SaveInDB { get; set; }
         }
 
