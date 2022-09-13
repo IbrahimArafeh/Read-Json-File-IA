@@ -7,9 +7,11 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,17 +21,35 @@ namespace NamosJsonAI
 {
     public partial class Form1 : MetroFramework.Forms.MetroForm
     {
-        public static string json = File.ReadAllText("appsettings.json");
-        public dynamic jsonObj = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
+        public static string jsonFilePath;
+        public static string json;
+        public dynamic jsonObj;
         public Form1()
         {
             InitializeComponent();
             LoadJsonFile();
-
         }
 
         private void LoadJsonFile()
         {
+            jsonFilePath = Properties.Settings.Default.FilePath;
+            if (string.IsNullOrEmpty(jsonFilePath))
+            {
+                string message = "Please you have to add Json file path";
+                string title = "No file";
+                MessageBox.Show(message, title);
+            }
+            else
+            {
+                json = File.ReadAllText(jsonFilePath);
+                jsonObj = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
+                getJsonFileInfo();
+            }
+        }
+
+        private void getJsonFileInfo()
+        {
+
             txtDailyCheckConnectionString.Text = jsonObj["DailyCheckConnectionString"];
             txtDSSJsonFilePath.Text = jsonObj["DSSJsonFilePath"];
             txtHOConnectionString.Text = jsonObj["HOConnectionString"];
@@ -52,7 +72,7 @@ namespace NamosJsonAI
 
             // Fill HOS Sync Text
             FillHOSSyncTablesList();
-            
+
             //Fill Sercices Grid
             FillServicesGrid(jsonObj["Services"]);
 
@@ -63,8 +83,8 @@ namespace NamosJsonAI
             FillSqlJobsGrid(jsonObj["SQLJobs"]);
 
             //Fill SQLJobs Grid
-            FillDbCompareDataGrid(jsonObj["DBCompareData"]);   
-            
+            FillDbCompareDataGrid(jsonObj["DBCompareData"]);
+
             //Fill File Compare Grid
             FillFileCompareGrid(jsonObj["FilesCompare"]);
 
@@ -82,6 +102,7 @@ namespace NamosJsonAI
 
             //Fill EPI Settings Grid
             FillEPISettingsGrid(jsonObj["EPISettings"]);
+
         }
 
         private void gridScheduleTasks_SelectionChanged(object sender, EventArgs e)
@@ -123,9 +144,10 @@ namespace NamosJsonAI
                 }
 
                 string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText("appsettings.json", output);
+                File.WriteAllText(jsonFilePath, output);
 
-                LoadJsonFile();
+                getJsonFileInfo();
+                MessageBox.Show("Json file has saved Successfully", "Update Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
         }
@@ -152,13 +174,13 @@ namespace NamosJsonAI
                 jsonObj["ScheduleTasks"] = experienceArrary;
                 string newJsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj,
                                        Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText("appsettings.json", newJsonResult);
+                File.WriteAllText(jsonFilePath, newJsonResult);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Add Error : " + ex.Message.ToString());
             }
-            LoadJsonFile();
+            getJsonFileInfo();
 
         }
 
@@ -178,7 +200,7 @@ namespace NamosJsonAI
                     experiencesArrary.Remove(companyToDeleted);
 
                     string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                    File.WriteAllText("appsettings.json", output);
+                    File.WriteAllText(jsonFilePath, output);
 
                 }
                 else
@@ -190,7 +212,7 @@ namespace NamosJsonAI
             {
                 throw;
             }
-            LoadJsonFile();
+            getJsonFileInfo();
 
         }
 
@@ -615,6 +637,11 @@ namespace NamosJsonAI
             jsonObj["BOSConnectionString"] = txtBOSConnectionString.Text;
             jsonObj["SCOConnectionString"] = txtSCOConnectionString.Text;
             jsonObj["POSConnectionString"] = txtPOSConnectionString.Text;
+            jsonObj["POSListFilePath"] = txtPOSListFilePath.Text;
+            jsonObj["DailyCheckConnectionString"]=txtDailyCheckConnectionString.Text;
+            jsonObj["DSSJsonFilePath"] = txtDSSJsonFilePath.Text;
+            jsonObj["HOConnectionString"] = txtHOConnectionString.Text;
+            jsonObj["MaxPOSCount"] = txtMaxPOSCount.Text;
 
             string[] authorInfo = txtHOSSyncTablesList.Text.Split(',');
             jsonObj["HOSSyncTablesList"] = JArray.Parse("[]".ToString());
@@ -625,7 +652,8 @@ namespace NamosJsonAI
             }
             
             string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-            File.WriteAllText("appsettings.json", output);
+            File.WriteAllText(jsonFilePath, output);
+            MessageBox.Show("Json file has saved Successfully", "Update Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         }
 
@@ -668,13 +696,13 @@ namespace NamosJsonAI
                 jsonObj["Services"] = experienceArrary;
                 string newJsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj,
                                        Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText("appsettings.json", newJsonResult);
+                File.WriteAllText(jsonFilePath, newJsonResult);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Add Error : " + ex.Message.ToString());
             }
-            LoadJsonFile();
+            getJsonFileInfo();
         }
 
         private void btnUpdateServices_Click(object sender, EventArgs e)
@@ -698,9 +726,10 @@ namespace NamosJsonAI
                 }
 
                 string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText("appsettings.json", output);
+                File.WriteAllText(jsonFilePath, output);
 
-                LoadJsonFile();
+                getJsonFileInfo();
+                MessageBox.Show("Json file has saved Successfully", "Update Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -719,7 +748,7 @@ namespace NamosJsonAI
                     experiencesArrary.Remove(companyToDeleted);
 
                     string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                    File.WriteAllText("appsettings.json", output);
+                    File.WriteAllText(jsonFilePath, output);
 
                 }
                 else
@@ -731,7 +760,7 @@ namespace NamosJsonAI
             {
                 throw;
             }
-            LoadJsonFile();
+            getJsonFileInfo();
         }
 
         private void gridSqlScripts_SelectionChanged_1(object sender, EventArgs e)
@@ -758,13 +787,13 @@ namespace NamosJsonAI
                 jsonObj["SQLScripts"] = experienceArrary;
                 string newJsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj,
                                        Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText("appsettings.json", newJsonResult);
+                File.WriteAllText(jsonFilePath, newJsonResult);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Add Error : " + ex.Message.ToString());
             }
-            LoadJsonFile();
+            getJsonFileInfo();
         }
 
         private void btnUpdateSqlScripts_Click_1(object sender, EventArgs e)
@@ -776,9 +805,10 @@ namespace NamosJsonAI
 
 
                 string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText("appsettings.json", output);
+                File.WriteAllText(jsonFilePath, output);
 
-                LoadJsonFile();
+                getJsonFileInfo();
+                MessageBox.Show("Json file has saved Successfully", "Update Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -796,7 +826,7 @@ namespace NamosJsonAI
                     experiencesArrary.Remove(companyToDeleted);
 
                     string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                    File.WriteAllText("appsettings.json", output);
+                    File.WriteAllText(jsonFilePath, output);
 
                 }
                 else
@@ -808,7 +838,7 @@ namespace NamosJsonAI
             {
                 throw;
             }
-            LoadJsonFile();
+            getJsonFileInfo();
         }
 
         private void gridSQLJobs_SelectionChanged(object sender, EventArgs e)
@@ -849,13 +879,13 @@ namespace NamosJsonAI
                 jsonObj["SQLJobs"] = experienceArrary;
                 string newJsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj,
                                        Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText("appsettings.json", newJsonResult);
+                File.WriteAllText(jsonFilePath, newJsonResult);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Add Error : " + ex.Message.ToString());
             }
-            LoadJsonFile();
+            getJsonFileInfo();
         }
 
         private void btnUpdateSqlJob_Click(object sender, EventArgs e)
@@ -880,9 +910,10 @@ namespace NamosJsonAI
                 }
 
                 string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText("appsettings.json", output);
+                File.WriteAllText(jsonFilePath, output);
 
-                LoadJsonFile();
+                getJsonFileInfo();
+                MessageBox.Show("Json file has saved Successfully", "Update Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -902,7 +933,7 @@ namespace NamosJsonAI
                     experiencesArrary.Remove(companyToDeleted);
 
                     string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                    File.WriteAllText("appsettings.json", output);
+                    File.WriteAllText(jsonFilePath, output);
 
                 }
                 else
@@ -914,7 +945,7 @@ namespace NamosJsonAI
             {
                 throw;
             }
-            LoadJsonFile();
+            getJsonFileInfo();
         }
 
         private void gridDbCompareData_SelectionChanged(object sender, EventArgs e)
@@ -967,13 +998,13 @@ namespace NamosJsonAI
                 jsonObj["DBCompareData"] = experienceArrary;
                 string newJsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj,
                                        Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText("appsettings.json", newJsonResult);
+                File.WriteAllText(jsonFilePath, newJsonResult);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Add Error : " + ex.Message.ToString());
             }
-            LoadJsonFile();
+            getJsonFileInfo();
         }
 
         private void btnUpdateDbCompareData_Click(object sender, EventArgs e)
@@ -1004,9 +1035,10 @@ namespace NamosJsonAI
                 }
 
                 string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText("appsettings.json", output);
+                File.WriteAllText(jsonFilePath, output);
 
-                LoadJsonFile();
+                getJsonFileInfo();
+                MessageBox.Show("Json file has saved Successfully", "Update Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -1025,7 +1057,7 @@ namespace NamosJsonAI
                     experiencesArrary.Remove(companyToDeleted);
 
                     string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                    File.WriteAllText("appsettings.json", output);
+                    File.WriteAllText(jsonFilePath, output);
 
                 }
                 else
@@ -1037,7 +1069,7 @@ namespace NamosJsonAI
             {
                 throw;
             }
-            LoadJsonFile();
+            getJsonFileInfo();
         }
 
         private void gridFilesCompare_SelectionChanged(object sender, EventArgs e)
@@ -1091,13 +1123,13 @@ namespace NamosJsonAI
                 jsonObj["FilesCompare"] = experienceArrary;
                 string newJsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj,
                                        Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText("appsettings.json", newJsonResult);
+                File.WriteAllText(jsonFilePath, newJsonResult);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Add Error : " + ex.Message.ToString());
             }
-            LoadJsonFile();
+            getJsonFileInfo();
         }
 
         private void btnUpdateFileCompare_Click(object sender, EventArgs e)
@@ -1129,9 +1161,10 @@ namespace NamosJsonAI
                 }
 
                 string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText("appsettings.json", output);
+                File.WriteAllText(jsonFilePath, output);
 
-                LoadJsonFile();
+                getJsonFileInfo();
+                MessageBox.Show("Json file has saved Successfully", "Update Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -1150,7 +1183,7 @@ namespace NamosJsonAI
                     experiencesArrary.Remove(companyToDeleted);
 
                     string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                    File.WriteAllText("appsettings.json", output);
+                    File.WriteAllText(jsonFilePath, output);
 
                 }
                 else
@@ -1162,7 +1195,7 @@ namespace NamosJsonAI
             {
                 throw;
             }
-            LoadJsonFile();
+            getJsonFileInfo();
         }
 
         private void gridMainCheckControl_SelectionChanged(object sender, EventArgs e)
@@ -1208,13 +1241,13 @@ namespace NamosJsonAI
                 jsonObj["MainCheckControl"] = experienceArrary;
                 string newJsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj,
                                        Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText("appsettings.json", newJsonResult);
+                File.WriteAllText(jsonFilePath, newJsonResult);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Add Error : " + ex.Message.ToString());
             }
-            LoadJsonFile();
+            getJsonFileInfo();
         }
 
         private void btnUpdateMainCheckControl_Click(object sender, EventArgs e)
@@ -1236,9 +1269,10 @@ namespace NamosJsonAI
                 }
 
                 string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText("appsettings.json", output);
+                File.WriteAllText(jsonFilePath, output);
 
-                LoadJsonFile();
+                getJsonFileInfo();
+                MessageBox.Show("Json file has saved Successfully", "Update Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -1257,7 +1291,7 @@ namespace NamosJsonAI
                     experiencesArrary.Remove(companyToDeleted);
 
                     string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                    File.WriteAllText("appsettings.json", output);
+                    File.WriteAllText(jsonFilePath, output);
 
                 }
                 else
@@ -1269,7 +1303,7 @@ namespace NamosJsonAI
             {
                 throw;
             }
-            LoadJsonFile();
+            getJsonFileInfo();
         }
 
         private void gridDssControl_SelectionChanged(object sender, EventArgs e)
@@ -1299,13 +1333,13 @@ namespace NamosJsonAI
                 jsonObj["DssControl"] = experienceArrary;
                 string newJsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj,
                                        Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText("appsettings.json", newJsonResult);
+                File.WriteAllText(jsonFilePath, newJsonResult);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Add Error : " + ex.Message.ToString());
             }
-            LoadJsonFile();
+            getJsonFileInfo();
         }
 
         private void btnUpdateDssControl_Click(object sender, EventArgs e)
@@ -1318,9 +1352,10 @@ namespace NamosJsonAI
                 jsonObj["DssControl"][gridDssControl.CurrentCell.RowIndex]["Enabled"] = chkDssControlEnable.Checked;
 
                 string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText("appsettings.json", output);
+                File.WriteAllText(jsonFilePath, output);
 
-                LoadJsonFile();
+                getJsonFileInfo();
+                MessageBox.Show("Json file has saved Successfully", "Update Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -1339,7 +1374,7 @@ namespace NamosJsonAI
                     experiencesArrary.Remove(companyToDeleted);
 
                     string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                    File.WriteAllText("appsettings.json", output);
+                    File.WriteAllText(jsonFilePath, output);
 
                 }
                 else
@@ -1351,7 +1386,7 @@ namespace NamosJsonAI
             {
                 throw;
             }
-            LoadJsonFile();
+            getJsonFileInfo();
         }
 
         private void gridEpiCheckControl_SelectionChanged(object sender, EventArgs e)
@@ -1381,13 +1416,13 @@ namespace NamosJsonAI
                 jsonObj["EpiCheckControl"] = experienceArrary;
                 string newJsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj,
                                        Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText("appsettings.json", newJsonResult);
+                File.WriteAllText(jsonFilePath, newJsonResult);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Add Error : " + ex.Message.ToString());
             }
-            LoadJsonFile();
+            getJsonFileInfo();
         }
 
         private void btnUpdateEpiCheckControl_Click(object sender, EventArgs e)
@@ -1400,9 +1435,10 @@ namespace NamosJsonAI
                 jsonObj["EpiCheckControl"][gridEpiCheckControl.CurrentCell.RowIndex]["Enabled"] = chkEpiCheckControlEnable.Checked;
 
                 string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText("appsettings.json", output);
+                File.WriteAllText(jsonFilePath, output);
 
-                LoadJsonFile();
+                getJsonFileInfo();
+                MessageBox.Show("Json file has saved Successfully", "Update Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -1421,7 +1457,7 @@ namespace NamosJsonAI
                     experiencesArrary.Remove(companyToDeleted);
 
                     string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                    File.WriteAllText("appsettings.json", output);
+                    File.WriteAllText(jsonFilePath, output);
 
                 }
                 else
@@ -1433,7 +1469,7 @@ namespace NamosJsonAI
             {
                 throw;
             }
-            LoadJsonFile();
+            getJsonFileInfo();
         }
 
         private void gridNamosCheckControl_SelectionChanged(object sender, EventArgs e)
@@ -1463,13 +1499,13 @@ namespace NamosJsonAI
                 jsonObj["NamosCheckControl"] = experienceArrary;
                 string newJsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj,
                                        Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText("appsettings.json", newJsonResult);
+                File.WriteAllText(jsonFilePath, newJsonResult);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Add Error : " + ex.Message.ToString());
             }
-            LoadJsonFile();
+            getJsonFileInfo();
         }
 
         private void btnUpdateNamosCheckControl_Click(object sender, EventArgs e)
@@ -1482,9 +1518,10 @@ namespace NamosJsonAI
                 jsonObj["NamosCheckControl"][gridNamosCheckControl.CurrentCell.RowIndex]["Enabled"] = chkNamosCheckControlEnable.Checked;
 
                 string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText("appsettings.json", output);
+                File.WriteAllText(jsonFilePath, output);
 
-                LoadJsonFile();
+                getJsonFileInfo();
+                MessageBox.Show("Json file has saved Successfully", "Update Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -1503,7 +1540,7 @@ namespace NamosJsonAI
                     experiencesArrary.Remove(companyToDeleted);
 
                     string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                    File.WriteAllText("appsettings.json", output);
+                    File.WriteAllText(jsonFilePath, output);
 
                 }
                 else
@@ -1515,7 +1552,7 @@ namespace NamosJsonAI
             {
                 throw;
             }
-            LoadJsonFile();
+            getJsonFileInfo();
         }
 
         private void gridEPISettings_SelectionChanged(object sender, EventArgs e)
@@ -1568,13 +1605,13 @@ namespace NamosJsonAI
                 jsonObj["EPISettings"] = experienceArrary;
                 string newJsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj,
                                        Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText("appsettings.json", newJsonResult);
+                File.WriteAllText(jsonFilePath, newJsonResult);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Add Error : " + ex.Message.ToString());
             }
-            LoadJsonFile();
+            getJsonFileInfo();
         }
 
         private void btnUpdateEPISettings_Click(object sender, EventArgs e)
@@ -1605,9 +1642,10 @@ namespace NamosJsonAI
                 }
 
                 string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText("appsettings.json", output);
+                File.WriteAllText(jsonFilePath, output);
 
-                LoadJsonFile();
+                getJsonFileInfo();
+                MessageBox.Show("Json file has saved Successfully", "Update Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -1626,7 +1664,7 @@ namespace NamosJsonAI
                     experiencesArrary.Remove(companyToDeleted);
 
                     string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                    File.WriteAllText("appsettings.json", output);
+                    File.WriteAllText(jsonFilePath, output);
 
                 }
                 else
@@ -1638,7 +1676,8 @@ namespace NamosJsonAI
             {
                 throw;
             }
-            LoadJsonFile();
+            getJsonFileInfo();
         }
+
     }
 }
