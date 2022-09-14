@@ -43,7 +43,7 @@
             this.metroTile1.Location = new System.Drawing.Point(67, 227);
             this.metroTile1.Name = "metroTile1";
             this.metroTile1.Size = new System.Drawing.Size(129, 85);
-            this.metroTile1.TabIndex = 1;
+            this.metroTile1.TabIndex = 4;
             this.metroTile1.Text = "Duplicate File";
             this.metroTile1.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
             this.metroTile1.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
@@ -56,7 +56,7 @@
             this.metroTile3.Location = new System.Drawing.Point(67, 328);
             this.metroTile3.Name = "metroTile3";
             this.metroTile3.Size = new System.Drawing.Size(319, 85);
-            this.metroTile3.TabIndex = 3;
+            this.metroTile3.TabIndex = 5;
             this.metroTile3.Text = "Restore Original file";
             this.metroTile3.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
             this.metroTile3.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
@@ -88,7 +88,7 @@
             this.txtPathJsonFile.SelectionStart = 0;
             this.txtPathJsonFile.ShortcutsEnabled = true;
             this.txtPathJsonFile.Size = new System.Drawing.Size(372, 23);
-            this.txtPathJsonFile.TabIndex = 4;
+            this.txtPathJsonFile.TabIndex = 0;
             this.txtPathJsonFile.UseSelectable = true;
             this.txtPathJsonFile.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.txtPathJsonFile.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
@@ -99,7 +99,7 @@
             this.btnUploadJsonFile.Location = new System.Drawing.Point(213, 127);
             this.btnUploadJsonFile.Name = "btnUploadJsonFile";
             this.btnUploadJsonFile.Size = new System.Drawing.Size(173, 185);
-            this.btnUploadJsonFile.TabIndex = 2;
+            this.btnUploadJsonFile.TabIndex = 3;
             this.btnUploadJsonFile.Text = "Open Json File";
             this.btnUploadJsonFile.TileImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnUploadJsonFile.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
@@ -114,7 +114,7 @@
             this.titleOpenJsonFile.Location = new System.Drawing.Point(67, 127);
             this.titleOpenJsonFile.Name = "titleOpenJsonFile";
             this.titleOpenJsonFile.Size = new System.Drawing.Size(129, 94);
-            this.titleOpenJsonFile.TabIndex = 0;
+            this.titleOpenJsonFile.TabIndex = 2;
             this.titleOpenJsonFile.Text = "Update Json";
             this.titleOpenJsonFile.TileImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.titleOpenJsonFile.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
@@ -128,7 +128,7 @@
             this.btnBrowseJsonFile.Location = new System.Drawing.Point(401, 84);
             this.btnBrowseJsonFile.Name = "btnBrowseJsonFile";
             this.btnBrowseJsonFile.Size = new System.Drawing.Size(75, 23);
-            this.btnBrowseJsonFile.TabIndex = 5;
+            this.btnBrowseJsonFile.TabIndex = 1;
             this.btnBrowseJsonFile.Text = "Browse";
             this.btnBrowseJsonFile.UseSelectable = true;
             this.btnBrowseJsonFile.Click += new System.EventHandler(this.btnBrowseJsonFile_Click);

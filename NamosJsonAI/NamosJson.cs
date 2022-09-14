@@ -24,9 +24,15 @@ namespace NamosJsonAI
 
         private void titleOpenJsonFile_Click(object sender, EventArgs e)
         {
-            Form1 form1 = new Form1();
-            form1.ShowDialog();
-
+            if (!string.IsNullOrEmpty(txtPathJsonFile.Text))
+            {
+                Form1 form1 = new Form1();
+                form1.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("You have to add Json File Path", "No File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnBrowseJsonFile_Click(object sender, EventArgs e)
